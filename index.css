@@ -20,7 +20,7 @@ nav {
     border: 1px solid rgb(49, 68, 68);
     border-radius: 0.5em;
     color: white;
-    margin-top:20px;
+    margin-top: 20px;
     height: 3em;
     width: 60%;
     display: flex;
@@ -30,7 +30,13 @@ nav {
     font-size: 1.4em;
 }
 
-main {
+a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.main-home {
     width: 60%;
     margin-top: 100px;
     padding: 1.4em;
@@ -72,5 +78,90 @@ main {
     pad: 5px;
     width: 300px;
     height: 300px;
-    border-radius:100%;
+    border-radius: 100%;
+}
+
+/* SOBRE */
+
+.main-sobre {
+    width: 70%;
+    margin-top: 20px;
+    padding: 1.4em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.sobre-resumo {
+    color: white;
+    padding: 2em;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.sobre-resumo-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+}
+
+.sobre-resumo-texto {
+    font-size: 18px;
+    text-align: justify;
+    width: 50%;
+}
+
+.ferramentas-sobre {
+    color: white;
+    padding: 2em;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    align-items: start;
+}
+
+.ferramentas-sobre hr {
+    width: 30%;
+    
+}
+
+.ferramentas-area {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: rgba(12, 32, 32);
+    box-shadow: 0px 0px 70px rgba(11, 196, 196, 0.3);
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    display: flex;
+}
+
+.ferramenta-card {
+    background-color: black;
+    display: flex;
+    gap: 10px;
+    width: 12%;
+    padding: 5px;
+    justify-content: start;
+    border-radius: 7px;
+    padding-left: 10px;
+    align-items: center;
+    font-size: 18px;
+}
+
+.icon-ph {
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    border: 1px solid red;
 }
