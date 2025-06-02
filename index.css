@@ -8,7 +8,7 @@
 
 body {
     background-color: rgb(12, 12, 12);
-     font-family: "Poppins", sans-serif;
+    font-family: "Poppins", sans-serif;
 }
 
 #container {
@@ -21,25 +21,25 @@ body {
 }
 
 nav {
-  height: 50px;
-  font-size: 16px;      
-  display: flex;
-  align-items: center;  
-  justify-content: center;
-  gap: 8%;
-  border: 1px solid rgb(49, 68, 68);
-  border-radius: 0.5em;
-  color: white;
-  margin-top: 20px;
-  width: 60%;
+    height: 50px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8%;
+    border: 1px solid rgb(23, 107, 2);
+    border-radius: 0.5em;
+    color: white;
+    margin-top: 20px;
+    width: 60%;
 }
 
 a {
-  font-size: 18px;     
-  line-height: 50px;  
-  white-space: nowrap;  
-  text-decoration: none;
-  color: rgb(128, 128, 128);
+    font-size: 18px;
+    line-height: 50px;
+    white-space: nowrap;
+    text-decoration: none;
+    color: rgb(128, 128, 128);
     transition: all 0.3s ease;
 }
 
@@ -74,7 +74,7 @@ a:hover {
     align-items: start;
 }
 
-.resumo-text p {  
+.resumo-text p {
     font-size: 14px;
 }
 
@@ -87,8 +87,8 @@ a:hover {
 }
 
 .img-placeholder {
-    border: 1px solid rgb(11, 196, 196);
-    box-shadow: 0px 0px 50px rgba(11, 196, 196, 0.3);
+    border: 1px solid rgb(38, 177, 3);
+    box-shadow: 0px 0px 50px rgba(38, 177, 3, 0.3);
     pad: 5px;
     width: 300px;
     height: 300px;
@@ -160,7 +160,7 @@ a:hover {
 }
 
 .ferramenta-card {
-    border: 1px solid cyan;
+    border: 1px solid rgb(23, 107, 2);
     display: flex;
     gap: 10px;
     width: 20%;
@@ -176,7 +176,7 @@ a:hover {
     width: 30px;
     height: 30px;
     border-radius: 100%;
-    border: 1px solid red;
+   
 }
 
 /* PROJETOS */
@@ -209,7 +209,7 @@ a:hover {
 .card-projeto {
     width: 30%;
     color: white;
-      background-color: rgb(27, 27, 27);
+    background-color: rgb(27, 27, 27);
     border-radius: 7px;
     padding: 15px;
     gap: 20px;
@@ -225,7 +225,7 @@ a:hover {
 .card-projeto:hover {
     transform: scale(1.05);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-     background-color: rgb(48, 48, 48);
+    background-color: rgb(48, 48, 48);
 }
 
 .img-projeto {
@@ -255,5 +255,5 @@ a:hover {
 
 .descricao-projeto h4 {
     font-weight: lighter;
-    color: cyan;
+    color: rgb(46, 216, 3);
 }
