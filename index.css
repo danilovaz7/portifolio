@@ -14,10 +14,18 @@ body {
 #container {
     display: flex;
     flex-direction: column;
-    justify-content: start;
+    justify-content: space-between;
     align-items: center;
     gap: 4em;
     height: 100vh;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    padding: 10px;
 }
 
 nav {
@@ -49,7 +57,6 @@ a:hover {
 
 .main-home {
     width: 60%;
-    margin-top: 100px;
     padding: 1.4em;
     display: flex;
     justify-content: center;
@@ -98,7 +105,7 @@ a:hover {
 /* SOBRE */
 
 .main-sobre {
-    width: 70%;
+    width: 80%;
     margin-top: 20px;
     padding: 1.4em;
     display: flex;
@@ -112,7 +119,7 @@ a:hover {
     color: white;
     padding: 2em;
     background-color: rgb(27, 27, 27);
-    width: 90%;
+    width: 100%;
     border-radius: 10px;
     display: flex;
     justify-content: center;
@@ -136,7 +143,7 @@ a:hover {
 .ferramentas-sobre {
     color: white;
     padding: 2em;
-    width: 90%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -183,7 +190,7 @@ a:hover {
 
 
 .main-projetos {
-    width: 70%;
+    width: 80%;
     padding: 1.4em;
     display: flex;
     align-items: center;
