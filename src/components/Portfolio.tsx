@@ -9,6 +9,7 @@ import cvPdf from '@/assets/curriculoDan2025.pdf';
 import heroImage from '@/assets/hero-bg.jpg';
 import fotoPerfil from '@/assets/eu.jpg'
 import clinicaleutz from '@/assets/ClinicaLeutz.jpg'
+import hamburguer from "@/assets/hamburgueria.jpg"
 
 const Portfolio = () => {
   const [activeSection, setActiveSection] = useState('hero');
@@ -96,6 +97,12 @@ const Portfolio = () => {
       description: 'Um site desenvolvido para gerenciar dados de clientes, orçamentos e procedimento para a Clínica Leutz',
       tech: ['React', 'Node.js', 'MySQL', 'Tailwind', 'HeroUI'],
       image: clinicaleutz,
+    },
+     {
+      title: 'Burguer House',
+      description: 'Um site demonstração de um cardápio online para uma hamburgueria ficticia',
+      tech: ['React', 'Node.js', 'MySQL', 'Tailwind', 'Shadcn'],
+      image: hamburguer,
     },
   ];
 
@@ -273,7 +280,6 @@ const Portfolio = () => {
               })}
             </div>
 
-       
             <div className="min-h-[400px]">
               <AnimatePresence mode="wait">
                 <motion.div
