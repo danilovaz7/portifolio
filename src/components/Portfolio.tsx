@@ -97,12 +97,14 @@ const Portfolio = () => {
       description: 'Um site desenvolvido para gerenciar dados de clientes, orçamentos e procedimento para a Clínica Leutz',
       tech: ['React', 'Node.js', 'MySQL', 'Tailwind', 'HeroUI'],
       image: clinicaleutz,
+      link: 'https://www.clinicaleutz.com.br'
     },
      {
       title: 'Burguer House',
       description: 'Um site demonstração de um cardápio online para uma hamburgueria ficticia',
       tech: ['React', 'Node.js', 'MySQL', 'Tailwind', 'Shadcn'],
       image: hamburguer,
+      link: ''
     },
   ];
 
