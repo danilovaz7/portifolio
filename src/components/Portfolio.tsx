@@ -2,13 +2,13 @@ import { useState, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { Badge } from '@/components/ui/badge.tsx';
-import { Github, Linkedin, Mail, ExternalLink, Code, Palette, Smartphone, Globe, MonitorSpeaker, Server, Database, Settings } from 'lucide-react';
+import { Github, Linkedin, Mail, Code, Palette, Globe, MonitorSpeaker, Server,  Dock, Database, Settings, ExternalLink } from 'lucide-react';
 import { motion, AnimatePresence } from "framer-motion";
 
-import cvPdf from '@/assets/curriculoDan2025.pdf';
+import cvPdf from '@/assets/curriculo20262sem.pdf';
 import heroImage from '@/assets/hero-bg.jpg';
 import fotoPerfil from '@/assets/eu.jpg'
-import clinicaleutz from '@/assets/ClinicaLeutz.jpg'
+import proaudio from '@/assets/proaudio.jpg'
 import hamburguer from "@/assets/hamburgueria.jpg"
 
 const Portfolio = () => {
@@ -87,24 +87,28 @@ const Portfolio = () => {
         { name: 'Docker', icon: Settings },
         { name: 'VS Code', icon: Code },
         { name: 'Figma', icon: Palette },
+        { name: 'Microsoft Power Platform', icon: Dock },
+        
       ]
     }
   };
 
   const projects = [
-    {
-      title: 'Clinica Leutz',
-      description: 'Um site desenvolvido para gerenciar dados de clientes, orçamentos e procedimento para a Clínica Leutz',
-      tech: ['React', 'Node.js', 'MySQL', 'Tailwind', 'HeroUI'],
-      image: clinicaleutz,
-      link: 'https://www.clinicaleutz.com.br'
-    },
      {
       title: 'Burguer House',
       description: 'Um site demonstração de um cardápio online para uma hamburgueria ficticia',
       tech: ['React', 'Node.js', 'MySQL', 'Tailwind', 'Shadcn'],
       image: hamburguer,
-      link: ''
+      link: '',
+      github: 'https://github.com/danilovaz7/buerguer-house'
+    },
+    {
+      title: 'Pro Audio',
+      description: 'Uma landing page não oficial para a empresa de som e luz ProAudio',
+      tech: ['React', 'Node.js', 'MySQL', 'Tailwind'],
+      image: proaudio,
+      link: 'https://pro-audio.vercel.app',
+      github: 'https://github.com/danilovaz7/ProAudio'
     },
   ];
 
@@ -113,9 +117,7 @@ const Portfolio = () => {
       <nav className="fixed top-0 w-full z-50 glass-card border-0 rounded-none backdrop-blur-md">
         <div className="container mx-auto px-6 py-4">
           <div className="flex justify-between items-center">
-            <div className="gradient-text text-xl font-bold">
-              Portfolio
-            </div>
+            
             <div className="hidden md:flex space-x-6">
               {['Início', 'Sobre', 'Skills', 'Projetos', 'Contato'].map((item, index) => {
                 const id = sectionIds[index];
@@ -171,7 +173,7 @@ const Portfolio = () => {
             >
               Ver Projetos
             </Button>
-            <a href={cvPdf} download="Danilo_Vaz_CV.pdf" aria-label="Baixar CV">
+            <a href={cvPdf} download="curriculo20262sem.pdf" aria-label="Baixar CV">
               <Button
                 size="lg"
                 className="gradient-button border-0 text-white font-semibold px-8"
@@ -211,7 +213,7 @@ const Portfolio = () => {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
               <p className="text-lg leading-relaxed">
-                Sou formado como Técnico em Desenvolvimento de Sistemas, e atualmente, sou estudante do 4° período de
+                Sou formado como Técnico em Desenvolvimento de Sistemas, e atualmente, sou estudante do 6° período de
                 Análise e Desenvolvimento de Sistemas pela Fatec Rubens Lara, em Santos-SP.
               </p>
               <p className="text-lg leading-relaxed text-muted-foreground">
@@ -331,29 +333,59 @@ const Portfolio = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {projects.map((project, index) => (
-              <Card key={index} className="glass-card border-0 card-hover overflow-hidden">
-                <div
-                  className="h-48 bg-cover bg-center"
-                  style={{ backgroundImage: `url(${project.image})` }}
-                />
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-bold mb-3">{project.title}</h3>
-                  <p className="text-muted-foreground mb-4">{project.description}</p>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.tech.map((tech, techIndex) => (
-                      <Badge key={techIndex} variant="secondary" className="text-xs">
-                        {tech}
-                      </Badge>
-                    ))}
-                  </div>
-                  <div className="flex gap-2">
-                    <Button size="sm" variant="outline" className="flex-1 btn-hover">
-                      <Github className="w-4 h-4 mr-2" />
-                      Código
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
+              <Card key={index} className="glass-card border-0 card-hover overflow-hidden flex flex-col justify-between">
+  <div>
+    {/* Imagem clicável apenas se houver link cadastrado */}
+    <div
+      className={`h-48 bg-cover bg-center transition-opacity ${project.link ? 'cursor-pointer hover:opacity-90' : ''}`}
+      style={{ backgroundImage: `url(${project.image})` }}
+      onClick={() => project.link && window.open(project.link, "_blank")}
+    />
+    <CardContent className="p-6">
+      {/* Título com comportamento de clique condicional */}
+      <h3 
+        className={`text-xl font-bold mb-3 transition-colors ${project.link ? 'cursor-pointer hover:text-primary' : ''}`}
+        onClick={() => project.link && window.open(project.link, "_blank")}
+      >
+        {project.title}
+      </h3>
+      
+      <p className="text-muted-foreground mb-4">{project.description}</p>
+      
+      <div className="flex flex-wrap gap-2 mb-4">
+        {project.tech.map((tech, techIndex) => (
+          <Badge key={techIndex} variant="secondary" className="text-xs">
+            {tech}
+          </Badge>
+        ))}
+      </div>
+    </CardContent>
+  </div>
+
+  <CardContent className="p-6 pt-0">
+    <div className="flex gap-2">
+      {/* Botão de Código (só aparece se você adicionar um campo 'github' no seu objeto no futuro) */}
+      {project.github && (
+        <Button size="sm" variant="outline" className="flex-1 btn-hover" asChild>
+          <a href={project.github} target="_blank" rel="noopener noreferrer">
+            <Github className="w-4 h-4 mr-2" />
+            Código
+          </a>
+        </Button>
+      )}
+
+      {/* Botão Ver Projeto - Só renderiza se project.link estiver preenchido */}
+      {project.link && (
+        <Button size="sm" className="flex-1 btn-hover" asChild>
+          <a href={project.link} target="_blank" rel="noopener noreferrer">
+            <ExternalLink className="w-4 h-4 mr-2" />
+            Ver Projeto
+          </a>
+        </Button>
+      )}
+    </div>
+  </CardContent>
+</Card>
             ))}
           </div>
         </div>
