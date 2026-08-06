@@ -99,7 +99,7 @@ const Portfolio = () => {
       description: 'Um site demonstração de um cardápio online para uma hamburgueria ficticia',
       tech: ['React', 'Node.js', 'MySQL', 'Tailwind', 'Shadcn'],
       image: hamburguer,
-      link: '',
+      link: 'https://buguer-house.vercel.app',
       github: 'https://github.com/danilovaz7/buerguer-house'
     },
     {
