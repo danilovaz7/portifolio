@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge.tsx';
 import { Github, Linkedin, Mail, Code, Palette, Globe, MonitorSpeaker, Server,  Dock, Database, Settings, ExternalLink } from 'lucide-react';
 import { motion, AnimatePresence } from "framer-motion";
 
-import cvPdf from '@/assets/curriculo20262sem.pdf';
+import cvPdf from '@/assets/curriculo.pdf';
 import heroImage from '@/assets/hero-bg.jpg';
 import fotoPerfil from '@/assets/eu.jpg'
 import proaudio from '@/assets/proaudio.jpg'
