@@ -182,7 +182,7 @@ const Portfolio = () => {
             >
               Ver Projetos
             </Button>
-            <a href={cvPdf} download="curriculo20262sem.pdf" aria-label="Baixar CV">
+            <a href={cvPdf} download="curriculo.pdf" aria-label="Baixar CV">
               <Button
                 size="lg"
                 className="gradient-button border-0 text-white font-semibold px-8"
