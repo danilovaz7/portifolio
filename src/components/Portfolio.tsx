@@ -10,6 +10,7 @@ import heroImage from '@/assets/hero-bg.jpg';
 import fotoPerfil from '@/assets/eu.jpg'
 import proaudio from '@/assets/proaudio.jpg'
 import hamburguer from "@/assets/hamburgueria.jpg"
+import HoM from "@/assets/HoM.jpg"
 
 const Portfolio = () => {
   const [activeSection, setActiveSection] = useState('hero');
@@ -101,6 +102,14 @@ const Portfolio = () => {
       image: hamburguer,
       link: 'https://buguer-house.vercel.app',
       github: 'https://github.com/danilovaz7/buerguer-house'
+    },
+    {
+      title: 'House Of Memories',
+      description: 'Um site feito para você organizar sua mente e seus a fazeres.',
+      tech: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Shadcn UI', 'Upstash Redis', 'Node.js', 'ESLint', 'Vercel'],
+      image: HoM,
+      link: 'https://house-of-memories.vercel.app',
+      github: 'https://github.com/danilovaz7/HouseOfMemories'
     },
     {
       title: 'Pro Audio',
