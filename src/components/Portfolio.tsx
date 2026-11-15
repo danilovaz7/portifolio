@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, type FormEvent } from 'react';
 import { Card, CardContent } from '@/components/ui/card.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { Badge } from '@/components/ui/badge.tsx';
@@ -11,6 +11,7 @@ import fotoPerfil from '@/assets/eu.jpg'
 import proaudio from '@/assets/proaudio.jpg'
 import hamburguer from "@/assets/hamburgueria.jpg"
 import HoM from "@/assets/HoM.jpg"
+import rotaCerta from "@/assets/rotacerta.jpg"
 
 const Portfolio = () => {
   const [activeSection, setActiveSection] = useState('hero');
@@ -49,17 +50,30 @@ const Portfolio = () => {
       behavior: 'smooth',
     });
   }
+  function handleContactSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const data = new FormData(e.currentTarget);
+    const nome = String(data.get('nome') ?? '');
+    const email = String(data.get('email') ?? '');
+    const mensagem = String(data.get('mensagem') ?? '');
+    const subject = encodeURIComponent(`Contato pelo portfólio: ${nome}`);
+    const body = encodeURIComponent(`${mensagem}\n\n${nome}\n${email}`);
+    window.location.href = `mailto:danilovaz06dv@gmail.com?subject=${subject}&body=${body}`;
+  }
+
   const skillCategories = {
     frontend: {
       name: 'Front-end',
       icon: MonitorSpeaker,
       skills: [
         { name: 'React', icon: Code },
+        { name: 'Next.js', icon: Code },
+        { name: 'TypeScript', icon: Code },
+        { name: 'JavaScript', icon: Code },
+        { name: 'React Native', icon: Code },
         { name: 'HTML', icon: Globe },
         { name: 'CSS', icon: Palette },
-        { name: 'Tailwind', icon: Palette },
-        { name: 'HeroUI', icon: Code },
-        { name: 'JavaScript', icon: Code },
+        { name: 'Tailwind CSS', icon: Palette },
       ]
     },
     backend: {
@@ -67,7 +81,10 @@ const Portfolio = () => {
       icon: Server,
       skills: [
         { name: 'Node.js', icon: Server },
-        { name: 'JavaScript', icon: Code },
+        { name: 'Express', icon: Server },
+        { name: 'APIs REST', icon: Globe },
+        { name: 'Socket.IO', icon: Server },
+        { name: 'JWT', icon: Settings },
         { name: 'Java', icon: Code },
       ]
     },
@@ -75,46 +92,58 @@ const Portfolio = () => {
       name: 'Banco de Dados',
       icon: Database,
       skills: [
+        { name: 'PostgreSQL', icon: Database },
         { name: 'MySQL', icon: Database },
         { name: 'SQL Server', icon: Database },
         { name: 'MongoDB', icon: Database },
+        { name: 'Redis', icon: Database },
+        { name: 'Sequelize', icon: Database },
       ]
     },
     tools: {
       name: 'Ferramentas',
       icon: Settings,
       skills: [
-        { name: 'Git', icon: Github },
+        { name: 'Git e GitHub', icon: Github },
         { name: 'Docker', icon: Settings },
-        { name: 'VS Code', icon: Code },
+        { name: 'WordPress', icon: Globe },
         { name: 'Figma', icon: Palette },
-        { name: 'Microsoft Power Platform', icon: Dock },
-        
+        { name: 'Power Apps', icon: Dock },
+        { name: 'Power Automate', icon: Dock },
+        { name: 'Power BI', icon: Dock },
       ]
     }
   };
 
   const projects = [
-     {
+    {
+      title: 'Rota Certa',
+      description: 'Recebe uma lista de endereços fora de ordem e calcula a sequência de entregas com menos quilômetros pelas ruas. Depois abre a rota no Google Maps ou no Waze. O algoritmo do caixeiro viajante é próprio e resolve 60 paradas em menos de meio segundo.',
+      tech: ['React', 'Vite', 'JavaScript', 'Leaflet', 'OpenStreetMap', 'OSRM'],
+      image: rotaCerta,
+      link: 'https://rota-certa-neon.vercel.app',
+      github: 'https://github.com/danilovaz7/rota-certa'
+    },
+    {
       title: 'Burguer House',
-      description: 'Um site demonstração de um cardápio online para uma hamburgueria ficticia',
+      description: 'Cardápio online de demonstração para uma hamburgueria fictícia.',
       tech: ['React', 'Node.js', 'MySQL', 'Tailwind', 'Shadcn'],
       image: hamburguer,
       link: 'https://buguer-house.vercel.app',
-      github: 'https://github.com/danilovaz7/buerguer-house'
+      github: 'https://github.com/danilovaz7/buguer-house'
     },
     {
       title: 'House Of Memories',
-      description: 'Um site feito para você organizar sua mente e seus a fazeres.',
-      tech: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Shadcn UI', 'Upstash Redis', 'Node.js', 'ESLint', 'Vercel'],
+      description: 'Organizador de tarefas em forma de mapa mental, com arrastar e soltar e calendário mensal para remarcar tarefas.',
+      tech: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'shadcn/ui', 'Redis'],
       image: HoM,
       link: 'https://house-of-memories.vercel.app',
       github: 'https://github.com/danilovaz7/HouseOfMemories'
     },
     {
       title: 'Pro Audio',
-      description: 'Uma landing page não oficial para a empresa de som e luz ProAudio',
-      tech: ['React', 'Node.js', 'MySQL', 'Tailwind'],
+      description: 'Landing page para uma empresa de som e iluminação para eventos, com portfólio e contato direto pelo WhatsApp.',
+      tech: ['React', 'Vite', 'Tailwind CSS'],
       image: proaudio,
       link: 'https://pro-audio.vercel.app',
       github: 'https://github.com/danilovaz7/ProAudio'
@@ -170,8 +199,8 @@ const Portfolio = () => {
           </div>
           <div className="fade-in-up delay-200">
             <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto">
-              Desenvolvedor Full Stack apaixonado por criar experiências digitais incríveis
-              e soluções inovadoras que fazem a diferença.
+              Desenvolvedor Full Stack em Santos, SP. Trabalho com React, Node.js,
+              TypeScript e WordPress, e com Power Platform no porto de Santos.
             </p>
           </div>
           <div className="fade-in-up delay-300 flex flex-col sm:flex-row gap-4 justify-center">
@@ -182,7 +211,7 @@ const Portfolio = () => {
             >
               Ver Projetos
             </Button>
-            <a href={cvPdf} download="curriculo.pdf" aria-label="Baixar CV">
+            <a href={cvPdf} download="Curriculo_Danilo_Vaz.pdf" aria-label="Baixar CV">
               <Button
                 size="lg"
                 className="gradient-button border-0 text-white font-semibold px-8"
@@ -192,10 +221,21 @@ const Portfolio = () => {
             </a>
           </div>
           <div className="fade-in-up delay-400 flex justify-center gap-6 mt-12">
-            {[Github, Linkedin, Mail].map((Icon, index) => (
-              <div key={index} className="glass-card p-3 hover-scale cursor-pointer icon-hover">
+            {[
+              { Icon: Github, href: 'https://github.com/danilovaz7', label: 'GitHub' },
+              { Icon: Linkedin, href: 'https://www.linkedin.com/in/danilo-vaz-3442bb2b0', label: 'LinkedIn' },
+              { Icon: Mail, href: 'mailto:danilovaz06dv@gmail.com', label: 'E-mail' },
+            ].map(({ Icon, href, label }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={label}
+                className="glass-card p-3 hover-scale cursor-pointer icon-hover"
+              >
                 <Icon className="w-6 h-6" />
-              </div>
+              </a>
             ))}
           </div>
         </div>
@@ -215,26 +255,27 @@ const Portfolio = () => {
               Sobre <span className="gradient-text">Mim</span>
             </h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Conheça um pouco da minha jornada e paixão pela tecnologia
+              Formação, trabalho atual e o que estou buscando
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
               <p className="text-lg leading-relaxed">
-                Sou formado como Técnico em Desenvolvimento de Sistemas, e atualmente, sou estudante do 6° período de
-                Análise e Desenvolvimento de Sistemas pela Fatec Rubens Lara, em Santos-SP.
+                Sou técnico em Desenvolvimento de Sistemas pelo Liceu Santista e estou me formando em
+                Análise e Desenvolvimento de Sistemas na Fatec Rubens Lara, em Santos, com conclusão em dezembro de 2026.
               </p>
               <p className="text-lg leading-relaxed text-muted-foreground">
-                Entusiasta de React, Node.js e tecnologias modernas, sempre busco
-                aprender novas ferramentas e metodologias para entregar soluções
-                de alta qualidade.
+                Trabalho como desenvolvedor freelancer na Forumpsico, plataforma de cursos de psicologia
+                que desenvolvi quase inteira junto com meu professor, cuidando de cadastro, pagamentos,
+                formulários e traduções. Também sou estagiário na DP World, onde crio aplicativos e
+                automações com Power Platform para a operação do porto.
               </p>
               <div className="flex gap-4">
                 {[
-                  { icon: Code, text: 'Clean Code' },
-                  { icon: Palette, text: 'UI/UX Design' },
-                  { icon: Globe, text: 'Web Performance' },
+                  { icon: Code, text: 'Full Stack' },
+                  { icon: Settings, text: 'Automação' },
+                  { icon: Database, text: 'Dados' },
                 ].map(({ icon: Icon, text }, index) => (
                   <div key={index} className="glass-card p-4 text-center card-hover">
                     <Icon className="w-8 h-8 mx-auto mb-2 text-primary icon-hover" />
@@ -247,14 +288,14 @@ const Portfolio = () => {
               <div className="relative w-60 h-72 mx-auto mb-6 rounded-2xl overflow-hidden shimmer">
                 <img
                   src={fotoPerfil}
-                  alt="Foto do desenvolvedor"
+                  alt="Foto de Danilo Vaz"
                   className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
                 />
               </div>
-              <h3 className="text-2xl font-bold mb-4 gradient-text">Desenvolvedor Freelancer</h3>
+              <h3 className="text-2xl font-bold mb-4 gradient-text">Aberto a oportunidades</h3>
               <p className="text-muted-foreground">
-                Trabalhando como freelancer, desenvolvendo soluções personalizadas
-                para diversos clientes, desde pequenos negócios até empresas estabelecidas.
+                Procuro uma vaga de desenvolvedor júnior em São Paulo e região, no modelo
+                híbrido ou remoto.
               </p>
             </div>
           </div>
@@ -268,7 +309,7 @@ const Portfolio = () => {
               Minhas <span className="gradient-text">Skills</span>
             </h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Tecnologias e ferramentas que domino para criar soluções incríveis
+              Tecnologias que uso nos meus projetos e no trabalho
             </p>
           </div>
 
@@ -336,7 +377,7 @@ const Portfolio = () => {
               Meus <span className="gradient-text">Projetos</span>
             </h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Alguns dos projetos que desenvolvi recentemente
+              Projetos que desenvolvi, com versão online e código
             </p>
           </div>
 
@@ -407,7 +448,7 @@ const Portfolio = () => {
               Vamos <span className="gradient-text">Conversar</span>
             </h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Tem uma ideia incrível? Vamos transformá-la em realidade juntos!
+              Quer falar sobre uma vaga ou um projeto? Me mande uma mensagem.
             </p>
           </div>
 
@@ -437,11 +478,13 @@ const Portfolio = () => {
               </div>
 
               <div className="glass-card p-8">
-                <form className="space-y-6">
+                <form className="space-y-6" onSubmit={handleContactSubmit}>
                   <div>
                     <label className="block text-sm font-medium mb-2">Nome</label>
                     <input
                       type="text"
+                      name="nome"
+                      required
                       className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:ring-2 focus:ring-primary outline-none"
                       placeholder="Seu nome"
                     />
@@ -450,6 +493,8 @@ const Portfolio = () => {
                     <label className="block text-sm font-medium mb-2">Email</label>
                     <input
                       type="email"
+                      name="email"
+                      required
                       className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:ring-2 focus:ring-primary outline-none"
                       placeholder="seu@email.com"
                     />
@@ -458,11 +503,13 @@ const Portfolio = () => {
                     <label className="block text-sm font-medium mb-2">Mensagem</label>
                     <textarea
                       rows={4}
+                      name="mensagem"
+                      required
                       className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:ring-2 focus:ring-primary outline-none resize-none"
                       placeholder="Sua mensagem..."
                     />
                   </div>
-                  <Button className="w-full gradient-button border-0 text-white font-semibold" onClick={(e) => { e.preventDefault(); }}>
+                  <Button type="submit" className="w-full gradient-button border-0 text-white font-semibold">
                     Enviar Mensagem
                   </Button>
                 </form>
@@ -475,7 +522,7 @@ const Portfolio = () => {
       <footer className="py-8 border-t border-border">
         <div className="container mx-auto px-6 text-center">
           <p className="text-muted-foreground">
-            © 2024 Portfolio. Danilo Vaz.
+            © {new Date().getFullYear()} Danilo Vaz
           </p>
         </div>
       </footer>
