@@ -34,7 +34,7 @@ const skillGroups = [
   { icon: Code2, title: 'Front-end', items: ['React', 'Next.js', 'TypeScript', 'JavaScript', 'React Native', 'Tailwind CSS', 'HTML e CSS', 'Design responsivo'], tone: 'tile-mint', span: 'md:col-span-2' },
   { icon: Server, title: 'Back-end', items: ['Node.js', 'Express', 'APIs REST', 'Socket.IO', 'JWT', 'Sequelize'], note: 'Noções de Java, PHP e Python', tone: 'tile-dark', span: '' },
   { icon: Database, title: 'Banco de dados', items: ['SQL', 'PostgreSQL', 'MySQL', 'SQL Server', 'MongoDB', 'Redis', 'Modelagem'], tone: 'tile-dark', span: '' },
-  { icon: Workflow, title: 'Dados e automação', items: ['Power BI (DAX, Power Query)', 'Power Apps', 'Power Automate', 'Excel', 'WordPress'], tone: 'tile-sand', span: '' },
+  { icon: Workflow, title: 'Dados e automação', items: ['Power BI (DAX, Power Query)', 'Power Apps', 'Power Automate', 'Excel', 'WordPress'], tone: 'tile-sand', span: 'md:col-span-2' },
   { icon: Wrench, title: 'DevOps e dia a dia', items: ['Git e GitHub', 'Docker', 'Vercel', 'CI/CD', 'Testes', 'Figma', 'Scrum', 'Kanban', 'Cursor'], tone: 'tile-sage', span: 'md:col-span-2' },
 ];
 
