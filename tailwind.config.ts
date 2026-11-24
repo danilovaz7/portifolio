@@ -15,17 +15,19 @@ export default {
     extend: {
       fontFamily: {
         display: ['"Bricolage Grotesque"', 'system-ui', 'sans-serif'],
-        body: ['"Source Serif 4"', 'Georgia', 'serif'],
+        body: ['Figtree', 'system-ui', 'sans-serif'],
       },
       colors: {
-        paper: '#E9EDEF',
-        ink: {
-          DEFAULT: '#14263A',
-          soft: '#4A5B6B',
+        mist: '#F2F6F1',
+        forest: '#13291D',
+        moss: '#4B6155',
+        pine: '#2F6B4C',
+        sage: {
+          DEFAULT: '#8DBFA0',
+          dark: '#456F57',
         },
-        dock: '#2E5E6B',
-        signal: '#F2B807',
-        rule: '#C9D1D6',
+        mint: '#D6EBDC',
+        sand: '#EFE5CF',
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
