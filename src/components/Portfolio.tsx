@@ -244,7 +244,7 @@ const Portfolio = () => {
           <a href="#topo" className="nav-logo" aria-label="Início">
             dv<span className="text-sage">.</span>
           </a>
-          <ul className="flex items-center gap-0.5 overflow-x-auto [scrollbar-width:none]">
+          <ul className="mr-auto flex items-center gap-0.5 overflow-x-auto [scrollbar-width:none] sm:mr-0">
             {navItems.map(({ id, label }) => (
               <li key={id}>
                 <a href={`#${id}`} className={`nav-link ${active === id ? 'is-active' : ''}`} aria-current={active === id ? 'true' : undefined}>
