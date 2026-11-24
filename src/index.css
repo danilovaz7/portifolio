@@ -4,182 +4,188 @@
 
 /*
   Paleta
-  paper  #E9EDEF  cinza-aço claro (fundo)
-  ink    #14263A  azul-marinho (texto e blocos escuros)
-  soft   #4A5B6B  texto secundário
-  dock   #2E5E6B  azul de doca (detalhes)
-  signal #F2B807  amarelo-sinal (só como fundo/marca, nunca como cor de texto)
-  rule   #C9D1D6  linhas
+  mist      #F2F6F1  fundo (sálvia bem clara)
+  forest    #13291D  texto principal
+  moss      #4B6155  texto secundário
+  pine      #2F6B4C  verde escuro (destaques, botões)
+  sage      #8DBFA0  verde pastel médio (detalhes)
+  sage-dark #456F57  datas e textos pequenos em verde
+  mint      #D6EBDC  verde pastel claro (chips, fundos)
+  sand      #EFE5CF  areia, combina com o verde
 */
 
 @layer base {
   :root {
-    --background: 200 13% 93%;
-    --foreground: 211 49% 15%;
-    --card: 200 13% 93%;
-    --card-foreground: 211 49% 15%;
+    --background: 105 21% 95%;
+    --foreground: 146 37% 12%;
+    --card: 0 0% 100%;
+    --card-foreground: 146 37% 12%;
     --popover: 0 0% 100%;
-    --popover-foreground: 211 49% 15%;
-    --primary: 211 49% 15%;
-    --primary-foreground: 200 13% 93%;
-    --secondary: 200 12% 85%;
-    --secondary-foreground: 211 49% 15%;
-    --muted: 200 12% 85%;
-    --muted-foreground: 210 18% 36%;
-    --accent: 45 94% 49%;
-    --accent-foreground: 211 49% 15%;
+    --popover-foreground: 146 37% 12%;
+    --primary: 149 39% 30%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 138 36% 88%;
+    --secondary-foreground: 146 37% 12%;
+    --muted: 138 36% 88%;
+    --muted-foreground: 147 13% 34%;
+    --accent: 42 52% 87%;
+    --accent-foreground: 146 37% 12%;
     --destructive: 0 72% 45%;
     --destructive-foreground: 0 0% 100%;
-    --border: 203 13% 81%;
-    --input: 203 13% 81%;
-    --ring: 194 40% 30%;
-    --radius: 0.25rem;
+    --border: 138 20% 82%;
+    --input: 138 20% 82%;
+    --ring: 149 39% 30%;
+    --radius: 0.75rem;
   }
 
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 1.5rem;
   }
 
   body {
-    @apply bg-paper text-ink font-body antialiased;
-    font-size: 1.0625rem;
-    text-rendering: optimizeLegibility;
+    @apply bg-mist text-forest font-body antialiased;
   }
 
   ::selection {
-    background: #f2b807;
-    color: #14263a;
+    background: #d6ebdc;
+    color: #13291d;
   }
 
   :focus-visible {
-    outline: 3px solid #2e5e6b;
+    outline: 3px solid #2f6b4c;
     outline-offset: 3px;
-  }
-
-  .bg-ink :focus-visible {
-    outline-color: #f2b807;
+    border-radius: 6px;
   }
 }
 
 @layer components {
-  .page {
-    @apply mx-auto w-full max-w-[76rem] px-6 md:px-10;
-  }
-
   .skip-link {
-    @apply absolute left-4 top-4 z-50 -translate-y-24 bg-signal px-4 py-2 font-display font-medium text-ink;
+    @apply absolute left-4 top-4 z-50 -translate-y-24 rounded-lg bg-pine px-4 py-2 font-display font-semibold text-white;
   }
   .skip-link:focus {
     @apply translate-y-0;
   }
 
-  .hero-name {
-    font-size: clamp(3.75rem, 13vw, 10.5rem);
-    font-weight: 700;
-    line-height: 0.86;
-    letter-spacing: -0.045em;
-    font-variation-settings: "wdth" 85;
+  /* Brilho verde que acompanha o mouse */
+  .glow {
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    background: radial-gradient(520px circle at var(--x, 50%) var(--y, 30%), rgba(141, 191, 160, 0.28), transparent 70%);
   }
 
-  .section-title {
-    font-size: clamp(2.25rem, 5vw, 3.75rem);
-    font-weight: 700;
-    line-height: 1;
-    letter-spacing: -0.03em;
+  .status-pill {
+    @apply inline-flex items-center gap-2 rounded-full bg-mint px-3.5 py-1.5 font-display text-sm font-semibold text-pine;
+  }
+  .status-dot {
+    @apply relative h-2.5 w-2.5 rounded-full bg-pine;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .status-dot::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 9999px;
+      background: #2f6b4c;
+      animation: ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+    }
+  }
+  @keyframes ping {
+    75%,
+    100% {
+      transform: scale(2.4);
+      opacity: 0;
+    }
   }
 
-  .contact-mail {
-    font-size: clamp(1.6rem, 5.5vw, 4rem);
-    font-weight: 600;
-    letter-spacing: -0.03em;
-    line-height: 1.1;
-    word-break: break-word;
-    background-image: linear-gradient(#f2b807, #f2b807);
-    background-repeat: no-repeat;
-    background-size: 100% 0.28em;
-    background-position: 0 92%;
-    transition: background-size 0.25s ease;
+  .section-heading {
+    @apply mb-8 font-display text-3xl font-bold tracking-tight;
   }
-  .contact-mail:hover {
-    background-size: 100% 0.9em;
+  @media (max-width: 1023px) {
+    .section-heading {
+      @apply sticky top-0 z-20 -mx-6 bg-mist/85 px-6 py-4 backdrop-blur md:-mx-12 md:px-12;
+    }
+  }
+
+  .nav-item {
+    @apply flex items-center gap-4 py-2 font-display font-semibold text-moss transition-colors;
+  }
+  .nav-line {
+    @apply h-0.5 w-8 rounded-full bg-sage transition-all duration-200;
+  }
+  .nav-item:hover,
+  .nav-item.is-active {
+    @apply text-forest;
+  }
+  .nav-item:hover .nav-line,
+  .nav-item.is-active .nav-line {
+    @apply w-16 bg-pine;
+  }
+
+  .lang-card {
+    @apply rounded-2xl border border-sage/40 bg-white/70 p-5 backdrop-blur-sm;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center gap-2 rounded-full bg-pine px-5 py-2.5 font-display font-semibold text-white transition-colors hover:bg-forest;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 rounded-full border-2 border-pine px-5 py-2 font-display font-semibold text-pine transition-colors hover:bg-pine hover:text-white;
+  }
+  .icon-btn {
+    @apply inline-flex h-11 w-11 items-center justify-center rounded-full bg-mint text-pine transition-colors hover:bg-pine hover:text-white;
+  }
+
+  .chip {
+    @apply rounded-full bg-mint px-3 py-1 text-[0.9rem] font-medium text-pine;
+  }
+  .chip-sm {
+    @apply px-2.5 py-0.5 text-xs;
   }
 
   .text-link {
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 0.25em;
-  }
-  .text-link:hover {
-    text-decoration-thickness: 3px;
-    text-decoration-color: #f2b807;
+    @apply underline decoration-sage decoration-2 underline-offset-4 transition-colors hover:text-pine hover:decoration-pine;
   }
 
-  .nav-link {
-    @apply text-ink-soft;
+  /* Card de projeto: o card inteiro é clicável pelo link do título */
+  .project-card {
+    @apply relative flex flex-col gap-5 rounded-2xl p-4 transition-colors sm:flex-row sm:items-start;
   }
-  .nav-link:hover {
-    @apply text-ink underline underline-offset-4;
+  .project-card:hover,
+  .project-card:focus-within {
+    @apply bg-white/70 shadow-[0_1px_0_rgba(19,41,29,0.04),0_12px_30px_-18px_rgba(19,41,29,0.25)];
   }
-
-  .project-shot {
-    @apply block overflow-hidden rounded-[3px] border border-ink/15 bg-white;
+  .card-link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 1rem;
   }
-  .project-shot img {
-    transition: transform 0.4s ease;
-  }
-  .project-shot:hover img {
-    transform: scale(1.02);
-  }
-
-  /* Única animação da página: a entrada da abertura. */
-  @media (prefers-reduced-motion: no-preference) {
-    .hero-name,
-    .hero-in,
-    .hero-photo {
-      animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
-    }
-    .hero-in {
-      animation-delay: 0.12s;
-    }
-    .hero-in-late {
-      animation-delay: 0.24s;
-    }
-    .hero-photo {
-      animation-name: photo-in;
-      animation-delay: 0.18s;
-    }
+  .card-link:hover {
+    @apply text-pine;
   }
 
-  @keyframes rise {
-    from {
-      opacity: 0;
-      transform: translateY(14px);
-    }
-    to {
-      opacity: 1;
-      transform: none;
-    }
+  .timeline-dot {
+    @apply absolute -left-[2.15rem] top-1.5 h-3.5 w-3.5 rounded-full border-[3px] border-mist bg-pine;
   }
 
-  @keyframes photo-in {
-    from {
-      opacity: 0;
-      clip-path: inset(-2rem -2rem 100% -2rem);
-    }
-    to {
-      opacity: 1;
-      clip-path: inset(-2rem -2rem -2rem -2rem);
-    }
+  .edu-card {
+    @apply rounded-2xl bg-white/70 p-4;
+  }
+
+  .contact-box {
+    @apply rounded-3xl bg-sand p-7 sm:p-9;
   }
 
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
     }
-    .project-shot img,
-    .contact-mail {
-      transition: none;
+    .glow {
+      display: none;
     }
   }
 }
