@@ -69,13 +69,13 @@
 
   /* Navegação flutuante */
   .nav-pill {
-    @apply flex w-full max-w-3xl items-center gap-2 rounded-full border border-mint/10 bg-deep/80 p-1.5 pl-5 shadow-[0_10px_40px_-12px_rgba(0,0,0,0.6)] backdrop-blur-md;
+    @apply flex w-full max-w-3xl items-center gap-1 rounded-full border border-mint/10 bg-deep/80 p-1.5 pl-4 sm:gap-2 sm:pl-5 shadow-[0_10px_40px_-12px_rgba(0,0,0,0.6)] backdrop-blur-md;
   }
   .nav-logo {
     @apply mr-auto shrink-0 font-display text-xl font-extrabold tracking-tight;
   }
   .nav-link {
-    @apply block whitespace-nowrap rounded-full px-3 py-2 text-sm font-semibold text-fog transition-colors hover:text-cloud sm:px-4;
+    @apply block whitespace-nowrap rounded-full px-2 py-2 text-[0.8rem] font-semibold text-fog transition-colors hover:text-cloud sm:px-4 sm:text-sm;
   }
   .nav-link.is-active {
     @apply bg-mint/10 text-mint;
@@ -130,7 +130,7 @@
   }
 
   .photo-tile {
-    @apply min-h-[22rem] p-0;
+    @apply h-[24rem] p-0 md:h-auto md:min-h-[22rem];
   }
   .photo-tile img {
     object-position: 50% 30%;
