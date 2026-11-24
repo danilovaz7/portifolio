@@ -1,12 +1,11 @@
 const NotFound = () => {
   return (
-    <main className="flex min-h-screen items-center bg-mist text-forest font-body">
-      <div className="mx-auto w-full max-w-[78rem] px-6 md:px-12 lg:px-16">
-        <h1 className="font-display text-4xl font-bold tracking-tight md:text-5xl">Essa página não existe.</h1>
-        <p className="mt-4 text-lg text-moss">O endereço pode ter mudado ou estar digitado errado.</p>
-        <a href="/" className="text-link mt-8 inline-block font-display text-lg font-medium">
-          Voltar para o portfólio
-        </a>
+    <main className="grid min-h-screen place-items-center bg-night px-6 text-cloud font-body">
+      <div className="max-w-lg text-center">
+        <p className="font-display text-7xl font-extrabold text-sage">404</p>
+        <h1 className="mt-4 font-display text-3xl font-bold">Essa página não existe.</h1>
+        <p className="mt-3 text-fog">O endereço pode ter mudado ou estar digitado errado.</p>
+        <a href="/" className="btn-mint mt-8">Voltar para o portfólio</a>
       </div>
     </main>
   );
