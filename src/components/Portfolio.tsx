@@ -181,23 +181,23 @@ const Portfolio = () => {
 
             <ul className="mt-16 space-y-24 md:space-y-32">
               {projects.map((project) => (
-                <li key={project.title} className="grid gap-8 md:grid-cols-12 md:gap-10">
+                <li key={project.title} className="grid gap-8 lg:grid-cols-12 lg:gap-10">
                   <a
                     href={project.link ?? project.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="project-shot md:col-span-7"
+                    className="project-shot self-start lg:col-span-7"
                     aria-label={`Abrir ${project.title}`}
                   >
                     <img
                       src={project.image}
                       alt={project.imageAlt}
                       loading="lazy"
-                      className="aspect-[16/10] w-full object-cover object-top"
+                      className="h-auto w-full"
                     />
                   </a>
 
-                  <div className="md:col-span-5 md:pt-2">
+                  <div className="max-w-[40rem] lg:col-span-5 lg:pt-2">
                     <div className="flex items-baseline justify-between gap-4 border-b border-rule pb-3">
                       <h3 className="font-display text-3xl font-semibold tracking-tight md:text-4xl">
                         {project.title}
@@ -230,15 +230,15 @@ const Portfolio = () => {
 
         {/* Trajetória */}
         <section id="trajetoria" aria-labelledby="trajetoria-titulo" className="bg-ink text-paper">
-          <div className="page grid gap-16 py-20 md:grid-cols-12 md:py-28">
-            <div className="md:col-span-4">
+          <div className="page grid gap-16 py-20 md:py-28 lg:grid-cols-12">
+            <div className="lg:col-span-4">
               <h2 id="trajetoria-titulo" className="section-title font-display">Trajetória</h2>
               <p className="mt-4 max-w-[22rem] text-lg leading-relaxed text-paper/75">
                 Trabalho e estudo ao mesmo tempo desde o técnico. Termino a Fatec em dezembro de 2026.
               </p>
             </div>
 
-            <div className="md:col-span-8">
+            <div className="lg:col-span-8">
               <h3 className="font-display text-xl font-semibold">Trabalho</h3>
               <ol className="mt-6 border-t border-paper/25">
                 {experience.map((item) => (
