@@ -14,10 +14,18 @@ export default {
     },
     extend: {
       fontFamily: {
-        'inter': ['Inter', 'sans-serif'],
-        'mono': ['JetBrains Mono', 'monospace'],
+        display: ['"Bricolage Grotesque"', 'system-ui', 'sans-serif'],
+        body: ['"Source Serif 4"', 'Georgia', 'serif'],
       },
       colors: {
+        paper: '#E9EDEF',
+        ink: {
+          DEFAULT: '#14263A',
+          soft: '#4A5B6B',
+        },
+        dock: '#2E5E6B',
+        signal: '#F2B807',
+        rule: '#C9D1D6',
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

@@ -1,529 +1,318 @@
-import { useState, useEffect, type FormEvent } from 'react';
-import { Card, CardContent } from '@/components/ui/card.tsx';
-import { Button } from '@/components/ui/button.tsx';
-import { Badge } from '@/components/ui/badge.tsx';
-import { Github, Linkedin, Mail, Code, Palette, Globe, MonitorSpeaker, Server,  Dock, Database, Settings, ExternalLink } from 'lucide-react';
-import { motion, AnimatePresence } from "framer-motion";
-
 import cvPdf from '@/assets/curriculo.pdf';
-import heroImage from '@/assets/hero-bg.jpg';
-import fotoPerfil from '@/assets/eu.jpg'
-import proaudio from '@/assets/proaudio.jpg'
-import hamburguer from "@/assets/hamburgueria.jpg"
-import HoM from "@/assets/HoM.jpg"
-import rotaCerta from "@/assets/rotacerta.jpg"
+import fotoPerfil from '@/assets/eu.jpg';
+import proaudio from '@/assets/proaudio.jpg';
+import hamburguer from '@/assets/hamburgueria.jpg';
+import HoM from '@/assets/HoM.jpg';
+import rotaCerta from '@/assets/rotacerta.jpg';
+
+const LINKEDIN = 'https://www.linkedin.com/in/danilo-vaz-3442bb2b0';
+const GITHUB = 'https://github.com/danilovaz7';
+const EMAIL = 'danilovaz06dv@gmail.com';
+
+type Project = {
+  title: string;
+  year: string;
+  summary: string;
+  detail?: string;
+  tech: string[];
+  image: string;
+  imageAlt: string;
+  link?: string;
+  github?: string;
+};
+
+const projects: Project[] = [
+  {
+    title: 'Rota Certa',
+    year: '2026',
+    summary:
+      'Você cola uma lista de endereços fora de ordem e ele devolve a sequência de entregas com menos quilômetros pelas ruas, pronta para abrir no Google Maps ou no Waze.',
+    detail:
+      'Escrevi o algoritmo do caixeiro viajante do zero. Ele resolve 60 paradas em menos de meio segundo, usando só mapas e dados abertos, sem chave de API.',
+    tech: ['React', 'Vite', 'JavaScript', 'Leaflet', 'OpenStreetMap', 'OSRM'],
+    image: rotaCerta,
+    imageAlt: 'Tela do Rota Certa com a lista de endereços e a rota desenhada no mapa',
+    link: 'https://rota-certa-neon.vercel.app',
+    github: 'https://github.com/danilovaz7/rota-certa',
+  },
+  {
+    title: 'House of Memories',
+    year: '2026',
+    summary:
+      'Organizador de tarefas em forma de mapa mental, com arrastar e soltar e um calendário mensal para remarcar o que ficou para depois.',
+    detail:
+      'Cada quadro tem um link próprio e pode ser particular ou compartilhado. As mudanças são salvas na hora, no Redis.',
+    tech: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'shadcn/ui', 'Redis'],
+    image: HoM,
+    imageAlt: 'Tela do House of Memories com tarefas espalhadas num mapa mental',
+    link: 'https://house-of-memories.vercel.app',
+    github: 'https://github.com/danilovaz7/HouseOfMemories',
+  },
+  {
+    title: 'Burguer House',
+    year: '2025',
+    summary: 'Cardápio online de demonstração para uma hamburgueria fictícia.',
+    tech: ['React', 'Node.js', 'MySQL', 'Tailwind CSS', 'shadcn/ui'],
+    image: hamburguer,
+    imageAlt: 'Tela do cardápio da Burguer House',
+    link: 'https://buguer-house.vercel.app',
+    github: 'https://github.com/danilovaz7/buguer-house',
+  },
+  {
+    title: 'Pro Audio',
+    year: '2026',
+    summary:
+      'Landing page para uma empresa de som e iluminação de eventos, com portfólio e contato direto pelo WhatsApp.',
+    detail: 'Construída mobile-first, com componentes separados para serviços e portfólio.',
+    tech: ['React', 'Vite', 'Tailwind CSS'],
+    image: proaudio,
+    imageAlt: 'Tela da landing page da Pro Audio',
+    github: 'https://github.com/danilovaz7/ProAudio',
+  },
+];
+
+const experience = [
+  {
+    period: 'mar 2026 – hoje',
+    role: 'Estagiário de Operações',
+    place: 'DP World, Santos',
+    text: 'Apps em Power Apps usados pelos operadores do terminal, automações com Power Automate ligadas aos horários de atracação dos navios e painéis em Power BI para acompanhar a operação.',
+  },
+  {
+    period: 'jul 2025 – hoje',
+    role: 'Desenvolvedor full stack (freelance)',
+    place: 'Kolmeia Network',
+    text: 'Desenvolvi quase toda a Forumpsico, plataforma de cursos de psicologia, junto com meu professor: cadastro, pagamentos, formulários, plugins e traduções em WordPress e PHP.',
+  },
+  {
+    period: 'nov 2025 – mar 2026',
+    role: 'Estagiário de despacho aduaneiro',
+    place: 'Maersk, Santos',
+    text: '',
+  },
+];
+
+const education = [
+  { period: '2024 – dez 2026', course: 'Análise e Desenvolvimento de Sistemas', place: 'Fatec Rubens Lara' },
+  { period: '2023 – 2025', course: 'Técnico em Desenvolvimento de Sistemas', place: 'Liceu Santista' },
+];
+
+const skills = [
+  {
+    group: 'Front-end',
+    items: ['React', 'Next.js', 'TypeScript', 'JavaScript', 'React Native', 'Tailwind CSS', 'HTML e CSS'],
+  },
+  {
+    group: 'Back-end e dados',
+    items: ['Node.js', 'Express', 'APIs REST', 'Socket.IO', 'JWT', 'Java', 'MySQL', 'PostgreSQL', 'SQL Server', 'MongoDB', 'Redis', 'Sequelize'],
+  },
+  {
+    group: 'Automação e ferramentas',
+    items: ['Power Apps', 'Power Automate', 'Power BI', 'WordPress', 'Git e GitHub', 'Docker', 'Figma'],
+  },
+];
 
 const Portfolio = () => {
-  const [activeSection, setActiveSection] = useState('hero');
-  const [activeSkillCategory, setActiveSkillCategory] = useState('frontend');
-  const sectionIds = ['hero', 'about', 'skills', 'projects', 'contact'];
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
-      },
-      { threshold: 0.3 }
-    );
-
-    const sections = document.querySelectorAll('section[id]');
-    sections.forEach((section) => observer.observe(section));
-
-    return () => sections.forEach((section) => observer.unobserve(section));
-  }, []);
-
-  function scrollToSection(id: string) {
-    const el = document.getElementById(id);
-    if (!el) return;
-    const nav = document.querySelector('nav');
-    const navHeight = nav ? (nav as HTMLElement).offsetHeight : 0;
-    const extraOffset = 12;
-
-    const top = el.getBoundingClientRect().top + window.pageYOffset - navHeight - extraOffset;
-
-    window.scrollTo({
-      top,
-      behavior: 'smooth',
-    });
-  }
-  function handleContactSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const data = new FormData(e.currentTarget);
-    const nome = String(data.get('nome') ?? '');
-    const email = String(data.get('email') ?? '');
-    const mensagem = String(data.get('mensagem') ?? '');
-    const subject = encodeURIComponent(`Contato pelo portfólio: ${nome}`);
-    const body = encodeURIComponent(`${mensagem}\n\n${nome}\n${email}`);
-    window.location.href = `mailto:danilovaz06dv@gmail.com?subject=${subject}&body=${body}`;
-  }
-
-  const skillCategories = {
-    frontend: {
-      name: 'Front-end',
-      icon: MonitorSpeaker,
-      skills: [
-        { name: 'React', icon: Code },
-        { name: 'Next.js', icon: Code },
-        { name: 'TypeScript', icon: Code },
-        { name: 'JavaScript', icon: Code },
-        { name: 'React Native', icon: Code },
-        { name: 'HTML', icon: Globe },
-        { name: 'CSS', icon: Palette },
-        { name: 'Tailwind CSS', icon: Palette },
-      ]
-    },
-    backend: {
-      name: 'Back-end',
-      icon: Server,
-      skills: [
-        { name: 'Node.js', icon: Server },
-        { name: 'Express', icon: Server },
-        { name: 'APIs REST', icon: Globe },
-        { name: 'Socket.IO', icon: Server },
-        { name: 'JWT', icon: Settings },
-        { name: 'Java', icon: Code },
-      ]
-    },
-    database: {
-      name: 'Banco de Dados',
-      icon: Database,
-      skills: [
-        { name: 'PostgreSQL', icon: Database },
-        { name: 'MySQL', icon: Database },
-        { name: 'SQL Server', icon: Database },
-        { name: 'MongoDB', icon: Database },
-        { name: 'Redis', icon: Database },
-        { name: 'Sequelize', icon: Database },
-      ]
-    },
-    tools: {
-      name: 'Ferramentas',
-      icon: Settings,
-      skills: [
-        { name: 'Git e GitHub', icon: Github },
-        { name: 'Docker', icon: Settings },
-        { name: 'WordPress', icon: Globe },
-        { name: 'Figma', icon: Palette },
-        { name: 'Power Apps', icon: Dock },
-        { name: 'Power Automate', icon: Dock },
-        { name: 'Power BI', icon: Dock },
-      ]
-    }
-  };
-
-  const projects = [
-    {
-      title: 'Rota Certa',
-      description: 'Recebe uma lista de endereços fora de ordem e calcula a sequência de entregas com menos quilômetros pelas ruas. Depois abre a rota no Google Maps ou no Waze. O algoritmo do caixeiro viajante é próprio e resolve 60 paradas em menos de meio segundo.',
-      tech: ['React', 'Vite', 'JavaScript', 'Leaflet', 'OpenStreetMap', 'OSRM'],
-      image: rotaCerta,
-      link: 'https://rota-certa-neon.vercel.app',
-      github: 'https://github.com/danilovaz7/rota-certa'
-    },
-    {
-      title: 'Burguer House',
-      description: 'Cardápio online de demonstração para uma hamburgueria fictícia.',
-      tech: ['React', 'Node.js', 'MySQL', 'Tailwind', 'Shadcn'],
-      image: hamburguer,
-      link: 'https://buguer-house.vercel.app',
-      github: 'https://github.com/danilovaz7/buguer-house'
-    },
-    {
-      title: 'House Of Memories',
-      description: 'Organizador de tarefas em forma de mapa mental, com arrastar e soltar e calendário mensal para remarcar tarefas.',
-      tech: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'shadcn/ui', 'Redis'],
-      image: HoM,
-      link: 'https://house-of-memories.vercel.app',
-      github: 'https://github.com/danilovaz7/HouseOfMemories'
-    },
-    {
-      title: 'Pro Audio',
-      description: 'Landing page para uma empresa de som e iluminação para eventos, com portfólio e contato direto pelo WhatsApp.',
-      tech: ['React', 'Vite', 'Tailwind CSS'],
-      image: proaudio,
-      link: 'https://pro-audio.vercel.app',
-      github: 'https://github.com/danilovaz7/ProAudio'
-    },
-  ];
-
   return (
-    <div className="min-h-screen bg-background">
-      <nav className="fixed top-0 w-full z-50 glass-card border-0 rounded-none backdrop-blur-md">
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex justify-between items-center">
-            
-            <div className="hidden md:flex space-x-6">
-              {['Início', 'Sobre', 'Skills', 'Projetos', 'Contato'].map((item, index) => {
-                const id = sectionIds[index];
-                return (
-                  <a
-                    key={item}
-                    href={`#${id}`}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      scrollToSection(id);
-                    }}
-                    className={`hover:text-primary transition-colors ${activeSection === id ? 'text-primary' : 'text-muted-foreground'
-                      }`}
-                  >
-                    {item}
-                  </a>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </nav>
+    <div className="min-h-screen bg-paper text-ink font-body">
+      <a href="#conteudo" className="skip-link">
+        Pular para o conteúdo
+      </a>
 
-      <section id="hero" className="min-h-screen flex items-center justify-center relative overflow-hidden">
-        <div
-          className="absolute inset-0 z-0"
-          style={{
-            backgroundImage: `url(${heroImage})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            filter: 'brightness(0.3)',
-          }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 z-10" />
-
-        <div className="container mx-auto px-6 relative z-20 text-center">
-          <div className="fade-in-up">
-            <h1 className="text-5xl md:text-7xl font-bold mb-6">
-              Olá, eu sou <span className="gradient-text">Danilo Vaz</span>
-            </h1>
-          </div>
-          <div className="fade-in-up delay-200">
-            <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto">
-              Desenvolvedor Full Stack em Santos, SP. Trabalho com React, Node.js,
-              TypeScript e WordPress, e com Power Platform no porto de Santos.
-            </p>
-          </div>
-          <div className="fade-in-up delay-300 flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              size="lg"
-              className="gradient-button border-0 text-white font-semibold px-8"
-              onClick={() => scrollToSection('projects')}
-            >
-              Ver Projetos
-            </Button>
-            <a href={cvPdf} download="Curriculo_Danilo_Vaz.pdf" aria-label="Baixar CV">
-              <Button
-                size="lg"
-                className="gradient-button border-0 text-white font-semibold px-8"
-              >
-                Baixar CV
-              </Button>
+      <header className="border-b border-rule">
+        <div className="page flex flex-wrap items-center justify-between gap-x-8 gap-y-3 py-5">
+          <a href="#topo" className="font-display text-lg font-semibold tracking-tight">
+            Danilo Vaz
+          </a>
+          <nav aria-label="Seções" className="flex flex-wrap gap-x-6 gap-y-2 text-[0.95rem]">
+            <a className="nav-link" href="#projetos">Projetos</a>
+            <a className="nav-link" href="#trajetoria">Trajetória</a>
+            <a className="nav-link" href="#contato">Contato</a>
+            <a className="nav-link" href={cvPdf} download="Curriculo_Danilo_Vaz.pdf">
+              Currículo (PDF)
             </a>
-          </div>
-          <div className="fade-in-up delay-400 flex justify-center gap-6 mt-12">
-            {[
-              { Icon: Github, href: 'https://github.com/danilovaz7', label: 'GitHub' },
-              { Icon: Linkedin, href: 'https://www.linkedin.com/in/danilo-vaz-3442bb2b0', label: 'LinkedIn' },
-              { Icon: Mail, href: 'mailto:danilovaz06dv@gmail.com', label: 'E-mail' },
-            ].map(({ Icon, href, label }) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={label}
-                className="glass-card p-3 hover-scale cursor-pointer icon-hover"
-              >
-                <Icon className="w-6 h-6" />
-              </a>
-            ))}
-          </div>
+          </nav>
         </div>
+      </header>
 
-        <div className="absolute top-20 left-10 float-animation delay-100">
-          <div className="w-20 h-20 rounded-full bg-gradient-to-r from-primary to-accent opacity-20" />
-        </div>
-        <div className="absolute bottom-20 right-10 float-animation delay-300">
-          <div className="w-16 h-16 rounded-lg bg-gradient-to-r from-accent to-primary opacity-30 rotate-45" />
-        </div>
-      </section>
-
-      <section id="about" className="py-20">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Sobre <span className="gradient-text">Mim</span>
-            </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Formação, trabalho atual e o que estou buscando
+      <main id="conteudo">
+        {/* Abertura */}
+        <section id="topo" className="page grid gap-12 pb-20 pt-14 md:grid-cols-12 md:items-end md:pb-28 md:pt-20">
+          <div className="md:col-span-7 lg:col-span-8">
+            <h1 className="hero-name font-display">Danilo Vaz</h1>
+            <p className="hero-in mt-8 max-w-[34rem] text-xl leading-relaxed md:text-[1.35rem]">
+              Sou desenvolvedor full stack em Santos. Durante o dia, faço apps e painéis para a
+              operação do porto na DP World. No resto do tempo, construo projetos como os que estão
+              logo abaixo.
             </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
-              <p className="text-lg leading-relaxed">
-                Sou técnico em Desenvolvimento de Sistemas pelo Liceu Santista e estou me formando em
-                Análise e Desenvolvimento de Sistemas na Fatec Rubens Lara, em Santos, com conclusão em dezembro de 2026.
-              </p>
-              <p className="text-lg leading-relaxed text-muted-foreground">
-                Trabalho como desenvolvedor freelancer na Forumpsico, plataforma de cursos de psicologia
-                que desenvolvi quase inteira junto com meu professor, cuidando de cadastro, pagamentos,
-                formulários e traduções. Também sou estagiário na DP World, onde crio aplicativos e
-                automações com Power Platform para a operação do porto.
-              </p>
-              <div className="flex gap-4">
-                {[
-                  { icon: Code, text: 'Full Stack' },
-                  { icon: Settings, text: 'Automação' },
-                  { icon: Database, text: 'Dados' },
-                ].map(({ icon: Icon, text }, index) => (
-                  <div key={index} className="glass-card p-4 text-center card-hover">
-                    <Icon className="w-8 h-8 mx-auto mb-2 text-primary icon-hover" />
-                    <p className="text-sm font-medium">{text}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="glass-card p-8 text-center card-hover pulse-glow">
-              <div className="relative w-60 h-72 mx-auto mb-6 rounded-2xl overflow-hidden shimmer">
-                <img
-                  src={fotoPerfil}
-                  alt="Foto de Danilo Vaz"
-                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-                />
-              </div>
-              <h3 className="text-2xl font-bold mb-4 gradient-text">Aberto a oportunidades</h3>
-              <p className="text-muted-foreground">
-                Procuro uma vaga de desenvolvedor júnior em São Paulo e região, no modelo
-                híbrido ou remoto.
-              </p>
+            <p className="hero-in hero-in-late mt-8 inline-block bg-signal px-3 py-1.5 font-display text-[1.05rem] font-medium">
+              Procurando vaga de dev júnior em São Paulo e região, híbrido ou remoto.
+            </p>
+            <div className="hero-in hero-in-late mt-10 flex flex-wrap gap-x-8 gap-y-3 text-lg">
+              <a className="text-link" href={`mailto:${EMAIL}`}>{EMAIL}</a>
+              <a className="text-link" href={LINKEDIN} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+              <a className="text-link" href={GITHUB} target="_blank" rel="noopener noreferrer">GitHub</a>
             </div>
           </div>
-        </div>
-      </section>
 
-      <section id="skills" className="py-20 bg-muted/30">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Minhas <span className="gradient-text">Skills</span>
-            </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Tecnologias que uso nos meus projetos e no trabalho
-            </p>
-          </div>
+          <figure className="hero-photo md:col-span-5 lg:col-span-4">
+            <div className="relative ml-4 mt-4 md:ml-0">
+              <div aria-hidden="true" className="absolute -left-4 -top-4 h-full w-full bg-signal" />
+              <img
+                src={fotoPerfil}
+                alt="Foto de Danilo Vaz"
+                className="relative aspect-[4/5] w-full object-cover"
+                width={1066}
+                height={1600}
+              />
+            </div>
+          </figure>
+        </section>
 
-          <div className="max-w-6xl mx-auto">
-            <div className="flex flex-wrap justify-center gap-4 mb-12">
-              {Object.entries(skillCategories).map(([key, category]) => {
-                const Icon = category.icon;
-                return (
-                  <Button
-                    key={key}
-                    variant={activeSkillCategory === key ? "default" : "outline"}
-                    className={`glass-card px-6 py-3 ${activeSkillCategory === key
-                      ? "gradient-button border-0 text-white"
-                      : "btn-hover"
-                      }`}
-                    onClick={() => setActiveSkillCategory(key)}
+        {/* Projetos */}
+        <section id="projetos" aria-labelledby="projetos-titulo" className="border-t border-ink">
+          <div className="page py-20 md:py-28">
+            <div className="max-w-[40rem]">
+              <h2 id="projetos-titulo" className="section-title font-display">Projetos</h2>
+              <p className="mt-4 text-lg leading-relaxed text-ink-soft">
+                Coisas que fiz para resolver problemas de verdade, minhas ou de quem me pediu.
+              </p>
+            </div>
+
+            <ul className="mt-16 space-y-24 md:space-y-32">
+              {projects.map((project) => (
+                <li key={project.title} className="grid gap-8 lg:grid-cols-12 lg:gap-10">
+                  <a
+                    href={project.link ?? project.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="project-shot self-start lg:col-span-7"
+                    aria-label={`Abrir ${project.title}`}
                   >
-                    <Icon className="w-5 h-5 mr-2" />
-                    {category.name}
-                  </Button>
-                );
-              })}
+                    <img
+                      src={project.image}
+                      alt={project.imageAlt}
+                      loading="lazy"
+                      className="h-auto w-full"
+                    />
+                  </a>
+
+                  <div className="max-w-[40rem] lg:col-span-5 lg:pt-2">
+                    <div className="flex items-baseline justify-between gap-4 border-b border-rule pb-3">
+                      <h3 className="font-display text-3xl font-semibold tracking-tight md:text-4xl">
+                        {project.title}
+                      </h3>
+                      <span className="shrink-0 text-ink-soft">{project.year}</span>
+                    </div>
+                    <p className="mt-5 text-lg leading-relaxed">{project.summary}</p>
+                    {project.detail && <p className="mt-4 leading-relaxed text-ink-soft">{project.detail}</p>}
+                    <p className="mt-5 text-[0.95rem] leading-relaxed text-dock">
+                      Feito com {project.tech.slice(0, -1).join(', ')} e {project.tech[project.tech.length - 1]}.
+                    </p>
+                    <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2 font-display font-medium">
+                      {project.link && (
+                        <a className="text-link" href={project.link} target="_blank" rel="noopener noreferrer">
+                          Abrir o site
+                        </a>
+                      )}
+                      {project.github && (
+                        <a className="text-link" href={project.github} target="_blank" rel="noopener noreferrer">
+                          Ver o código
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        {/* Trajetória */}
+        <section id="trajetoria" aria-labelledby="trajetoria-titulo" className="bg-ink text-paper">
+          <div className="page grid gap-16 py-20 md:py-28 lg:grid-cols-12">
+            <div className="lg:col-span-4">
+              <h2 id="trajetoria-titulo" className="section-title font-display">Trajetória</h2>
+              <p className="mt-4 max-w-[22rem] text-lg leading-relaxed text-paper/75">
+                Trabalho e estudo ao mesmo tempo desde o técnico. Termino a Fatec em dezembro de 2026.
+              </p>
             </div>
 
-            <div className="min-h-[400px]">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeSkillCategory}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.3 }}
-                  className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 fade-in"
-                >
-                  {skillCategories[activeSkillCategory as keyof typeof skillCategories].skills.map((skill, index) => {
-                    const Icon = skill.icon;
-                    return (
-                      <div
-                        key={index}
-                        className="glass-card p-6 text-center card-hover group pulse-glow "
-                        style={{ animationDelay: `${index * 100}ms` }}
-                      >
-                        <div className="mb-4 text-primary group-hover:text-accent transition-colors duration-300">
-                          <Icon className="w-12 h-12 mx-auto icon-hover" />
-                        </div>
-                        <h3 className="font-semibold text-lg mb-2 gradient-text">
-                          {skill.name}
-                        </h3>
-                        <div className="w-8 h-1 bg-gradient-to-r from-primary to-accent mx-auto rounded-full opacity-70"></div>
-                      </div>
-                    );
-                  })}
-                </motion.div>
-              </AnimatePresence>
+            <div className="lg:col-span-8">
+              <h3 className="font-display text-xl font-semibold">Trabalho</h3>
+              <ol className="mt-6 border-t border-paper/25">
+                {experience.map((item) => (
+                  <li key={item.role} className="grid gap-2 border-b border-paper/25 py-7 sm:grid-cols-[11rem_1fr] sm:gap-8">
+                    <span className="text-paper/70">{item.period}</span>
+                    <div>
+                      <p className="font-display text-xl font-semibold">{item.role}</p>
+                      <p className="text-paper/80">{item.place}</p>
+                      {item.text && <p className="mt-3 max-w-[36rem] leading-relaxed text-paper/80">{item.text}</p>}
+                    </div>
+                  </li>
+                ))}
+              </ol>
+
+              <h3 className="mt-16 font-display text-xl font-semibold">Formação</h3>
+              <ol className="mt-6 border-t border-paper/25">
+                {education.map((item) => (
+                  <li key={item.course} className="grid gap-2 border-b border-paper/25 py-7 sm:grid-cols-[11rem_1fr] sm:gap-8">
+                    <span className="text-paper/70">{item.period}</span>
+                    <div>
+                      <p className="font-display text-xl font-semibold">{item.course}</p>
+                      <p className="text-paper/80">{item.place}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-
-      <section id="projects" className="py-20">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Meus <span className="gradient-text">Projetos</span>
-            </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Projetos que desenvolvi, com versão online e código
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project, index) => (
-              <Card key={index} className="glass-card border-0 card-hover overflow-hidden flex flex-col justify-between">
-  <div>
-    {/* Imagem clicável apenas se houver link cadastrado */}
-    <div
-      className={`h-48 bg-cover bg-center transition-opacity ${project.link ? 'cursor-pointer hover:opacity-90' : ''}`}
-      style={{ backgroundImage: `url(${project.image})` }}
-      onClick={() => project.link && window.open(project.link, "_blank")}
-    />
-    <CardContent className="p-6">
-      {/* Título com comportamento de clique condicional */}
-      <h3 
-        className={`text-xl font-bold mb-3 transition-colors ${project.link ? 'cursor-pointer hover:text-primary' : ''}`}
-        onClick={() => project.link && window.open(project.link, "_blank")}
-      >
-        {project.title}
-      </h3>
-      
-      <p className="text-muted-foreground mb-4">{project.description}</p>
-      
-      <div className="flex flex-wrap gap-2 mb-4">
-        {project.tech.map((tech, techIndex) => (
-          <Badge key={techIndex} variant="secondary" className="text-xs">
-            {tech}
-          </Badge>
-        ))}
-      </div>
-    </CardContent>
-  </div>
-
-  <CardContent className="p-6 pt-0">
-    <div className="flex gap-2">
-      {/* Botão de Código (só aparece se você adicionar um campo 'github' no seu objeto no futuro) */}
-      {project.github && (
-        <Button size="sm" variant="outline" className="flex-1 btn-hover" asChild>
-          <a href={project.github} target="_blank" rel="noopener noreferrer">
-            <Github className="w-4 h-4 mr-2" />
-            Código
-          </a>
-        </Button>
-      )}
-
-      {/* Botão Ver Projeto - Só renderiza se project.link estiver preenchido */}
-      {project.link && (
-        <Button size="sm" className="flex-1 btn-hover" asChild>
-          <a href={project.link} target="_blank" rel="noopener noreferrer">
-            <ExternalLink className="w-4 h-4 mr-2" />
-            Ver Projeto
-          </a>
-        </Button>
-      )}
-    </div>
-  </CardContent>
-</Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="contact" className="py-20 bg-muted/30">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Vamos <span className="gradient-text">Conversar</span>
-            </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Quer falar sobre uma vaga ou um projeto? Me mande uma mensagem.
-            </p>
-          </div>
-
-          <div className="max-w-4xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-12">
-              <div className="space-y-8">
-                <h3 className="text-2xl font-bold gradient-text">Entre em Contato</h3>
-                <div className="space-y-4">
-                  {[
-                    { icon: Mail, text: 'danilovaz06dv@gmail.com', href: 'mailto:danilovaz06dv@gmail.com' },
-                    { icon: Linkedin, text: '/in/danilo-vaz-3442bb2b0', href: 'https://www.linkedin.com/in/danilo-vaz-3442bb2b0' },
-                    { icon: Github, text: '/danilovaz7', href: 'https://github.com/danilovaz7' },
-                  ].map(({ icon: Icon, text, href }, index) => (
-                    <a
-                      key={index}
-                      href={href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-4 glass-card p-4 card-hover"
-                      aria-label={`Abrir ${text} em nova aba`}
-                    >
-                      <Icon className="w-6 h-6 text-primary icon-hover" />
-                      <span>{text}</span>
-                    </a>
-                  ))}
+        {/* Tecnologias */}
+        <section aria-labelledby="tecnologias-titulo" className="border-b border-rule">
+          <div className="page py-20 md:py-28">
+            <h2 id="tecnologias-titulo" className="section-title font-display">Com o que eu trabalho</h2>
+            <div className="mt-12 grid gap-12 md:grid-cols-3">
+              {skills.map((block) => (
+                <div key={block.group}>
+                  <h3 className="border-b border-ink pb-3 font-display text-xl font-semibold">{block.group}</h3>
+                  <ul className="mt-4 space-y-1.5 text-lg">
+                    {block.items.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
                 </div>
-              </div>
+              ))}
+            </div>
+            <p className="mt-12 max-w-[40rem] leading-relaxed text-ink-soft">
+              Falo inglês em nível avançado e espanhol em nível intermediário.
+            </p>
+          </div>
+        </section>
 
-              <div className="glass-card p-8">
-                <form className="space-y-6" onSubmit={handleContactSubmit}>
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Nome</label>
-                    <input
-                      type="text"
-                      name="nome"
-                      required
-                      className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:ring-2 focus:ring-primary outline-none"
-                      placeholder="Seu nome"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Email</label>
-                    <input
-                      type="email"
-                      name="email"
-                      required
-                      className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:ring-2 focus:ring-primary outline-none"
-                      placeholder="seu@email.com"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Mensagem</label>
-                    <textarea
-                      rows={4}
-                      name="mensagem"
-                      required
-                      className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:ring-2 focus:ring-primary outline-none resize-none"
-                      placeholder="Sua mensagem..."
-                    />
-                  </div>
-                  <Button type="submit" className="w-full gradient-button border-0 text-white font-semibold">
-                    Enviar Mensagem
-                  </Button>
-                </form>
-              </div>
+        {/* Contato */}
+        <section id="contato" aria-labelledby="contato-titulo">
+          <div className="page py-24 md:py-32">
+            <h2 id="contato-titulo" className="section-title font-display max-w-[44rem]">
+              Tem uma vaga ou um projeto em mente? Me escreve.
+            </h2>
+            <a href={`mailto:${EMAIL}`} className="contact-mail font-display mt-10 inline-block">
+              {EMAIL}
+            </a>
+            <div className="mt-10 flex flex-wrap gap-x-8 gap-y-3 text-lg">
+              <a className="text-link" href={LINKEDIN} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+              <a className="text-link" href={GITHUB} target="_blank" rel="noopener noreferrer">GitHub</a>
+              <a className="text-link" href={cvPdf} download="Curriculo_Danilo_Vaz.pdf">Baixar currículo (PDF)</a>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </main>
 
-      <footer className="py-8 border-t border-border">
-        <div className="container mx-auto px-6 text-center">
-          <p className="text-muted-foreground">
-            © {new Date().getFullYear()} Danilo Vaz
-          </p>
+      <footer className="border-t border-rule">
+        <div className="page flex flex-wrap justify-between gap-4 py-8 text-ink-soft">
+          <p>© {new Date().getFullYear()} Danilo Vaz</p>
+          <p>Santos, SP</p>
         </div>
       </footer>
     </div>
