@@ -190,87 +190,82 @@ const Portfolio = () => {
 
       <div className="relative mx-auto max-w-[78rem] px-6 md:px-12 lg:flex lg:justify-between lg:gap-16 lg:px-16">
         {/* Coluna fixa */}
-        <header className="pt-14 lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-[44%] lg:flex-col lg:justify-between lg:py-20">
-          <div>
-            <div className="flex items-center gap-5">
-              <img
-                src={fotoPerfil}
-                alt="Foto de Danilo Vaz"
-                className="h-20 w-20 rounded-full object-cover object-top ring-4 ring-mint"
-                width={80}
-                height={80}
-              />
-              <span className="status-pill">
-                <span className="status-dot" aria-hidden="true" />
-                Aberto a vagas
-              </span>
-            </div>
-
-            <h1 className="mt-7 font-display text-5xl font-bold tracking-tight sm:text-6xl">Danilo Vaz</h1>
-            <p className="mt-3 font-display text-xl font-medium text-pine">Desenvolvedor Full Stack Júnior</p>
-            <p className="mt-4 max-w-sm leading-relaxed text-moss">
-              Faço sistemas web e automações em Santos. Procuro minha primeira vaga de dev em São Paulo e região,
-              híbrido ou remoto.
-            </p>
-
-            <nav aria-label="Seções" className="mt-12 hidden lg:block">
-              <ul className="space-y-1">
-                {sections.map(({ id, label }) => (
-                  <li key={id}>
-                    <a
-                      href={`#${id}`}
-                      className={`nav-item ${active === id ? 'is-active' : ''}`}
-                      aria-current={active === id ? 'true' : undefined}
-                    >
-                      <span className="nav-line" aria-hidden="true" />
-                      {label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </nav>
+        <header className="pt-14 lg:sticky lg:top-0 lg:max-h-screen lg:w-[44%] lg:overflow-y-auto lg:py-14 [scrollbar-width:none]">
+          <div className="flex items-center gap-4">
+            <img
+              src={fotoPerfil}
+              alt="Foto de Danilo Vaz"
+              className="h-16 w-16 rounded-full object-cover object-top ring-4 ring-mint"
+              width={64}
+              height={64}
+            />
+            <span className="status-pill">
+              <span className="status-dot" aria-hidden="true" />
+              Aberto a vagas
+            </span>
           </div>
 
-          <div className="mt-10 lg:mt-0">
-            <div className="lang-card">
-              <p className="font-display text-sm font-semibold text-pine">Idiomas</p>
-              <ul className="mt-3 space-y-2.5">
-                {languages.map((lang) => (
-                  <li key={lang.name} className="flex items-center justify-between gap-4">
-                    <span className="font-display font-semibold">{lang.name}</span>
-                    <span className="flex items-center gap-3 text-sm text-moss">
-                      {lang.level}
-                      <span className="flex gap-1" aria-hidden="true">
-                        {[1, 2, 3].map((n) => (
-                          <span key={n} className={`h-2 w-5 rounded-full ${n <= lang.fill ? 'bg-pine' : 'bg-mint'}`} />
-                        ))}
-                      </span>
+          <h1 className="mt-6 font-display text-5xl font-bold tracking-tight sm:text-6xl">Danilo Vaz</h1>
+          <p className="mt-2 font-display text-xl font-medium text-pine">Desenvolvedor Full Stack Júnior</p>
+          <p className="mt-3 max-w-sm leading-relaxed text-moss">
+            Faço sistemas web e automações em Santos. Procuro vaga de dev em São Paulo e região, híbrido ou remoto.
+          </p>
+
+          <div className="mt-6 flex flex-wrap items-center gap-3">
+            <a className="btn-primary" href={cvPdf} download="Curriculo_Danilo_Vaz.pdf">
+              <Download className="h-4 w-4" aria-hidden="true" />
+              Baixar currículo
+            </a>
+            <a className="icon-btn" href={GITHUB} target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+              <Github className="h-5 w-5" />
+            </a>
+            <a className="icon-btn" href={LINKEDIN} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+              <Linkedin className="h-5 w-5" />
+            </a>
+            <a className="icon-btn" href={`mailto:${EMAIL}`} aria-label="Enviar e-mail">
+              <Mail className="h-5 w-5" />
+            </a>
+          </div>
+
+          <div className="lang-card mt-7 max-w-sm">
+            <p className="font-display text-sm font-semibold text-pine">Idiomas</p>
+            <ul className="mt-2.5 space-y-2">
+              {languages.map((lang) => (
+                <li key={lang.name} className="flex items-center justify-between gap-4">
+                  <span className="font-display font-semibold">{lang.name}</span>
+                  <span className="flex items-center gap-3 text-sm text-moss">
+                    {lang.level}
+                    <span className="flex gap-1" aria-hidden="true">
+                      {[1, 2, 3].map((n) => (
+                        <span key={n} className={`h-2 w-5 rounded-full ${n <= lang.fill ? 'bg-pine' : 'bg-mint'}`} />
+                      ))}
                     </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="mt-6 flex flex-wrap items-center gap-3">
-              <a className="btn-primary" href={cvPdf} download="Curriculo_Danilo_Vaz.pdf">
-                <Download className="h-4 w-4" aria-hidden="true" />
-                Baixar currículo
-              </a>
-              <a className="icon-btn" href={GITHUB} target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-                <Github className="h-5 w-5" />
-              </a>
-              <a className="icon-btn" href={LINKEDIN} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-                <Linkedin className="h-5 w-5" />
-              </a>
-              <a className="icon-btn" href={`mailto:${EMAIL}`} aria-label="Enviar e-mail">
-                <Mail className="h-5 w-5" />
-              </a>
-            </div>
+                  </span>
+                </li>
+              ))}
+            </ul>
           </div>
+
+          <nav aria-label="Seções" className="mt-8 hidden lg:block">
+            <ul>
+              {sections.map(({ id, label }) => (
+                <li key={id}>
+                  <a
+                    href={`#${id}`}
+                    className={`nav-item ${active === id ? 'is-active' : ''}`}
+                    aria-current={active === id ? 'true' : undefined}
+                  >
+                    <span className="nav-line" aria-hidden="true" />
+                    {label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
         </header>
 
         {/* Conteúdo */}
-        <main id="conteudo" className="pb-24 pt-20 lg:w-[52%] lg:py-20">
+        <main id="conteudo" className="pb-24 pt-20 lg:w-[52%] lg:py-14">
           <section id="sobre" aria-labelledby="sobre-titulo" className="scroll-mt-20">
             <h2 id="sobre-titulo" className="section-heading">Sobre</h2>
             <div className="space-y-4 text-[1.075rem] leading-relaxed text-moss">

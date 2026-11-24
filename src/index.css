@@ -59,6 +59,10 @@
 }
 
 @layer components {
+  header::-webkit-scrollbar {
+    display: none;
+  }
+
   .skip-link {
     @apply absolute left-4 top-4 z-50 -translate-y-24 rounded-lg bg-pine px-4 py-2 font-display font-semibold text-white;
   }
@@ -111,7 +115,7 @@
   }
 
   .nav-item {
-    @apply flex items-center gap-4 py-2 font-display font-semibold text-moss transition-colors;
+    @apply flex items-center gap-4 py-1.5 font-display font-semibold text-moss transition-colors;
   }
   .nav-line {
     @apply h-0.5 w-8 rounded-full bg-sage transition-all duration-200;
@@ -126,7 +130,7 @@
   }
 
   .lang-card {
-    @apply rounded-2xl border border-sage/40 bg-white/70 p-5 backdrop-blur-sm;
+    @apply rounded-2xl border border-sage/40 bg-white/70 px-5 py-4 backdrop-blur-sm;
   }
 
   .btn-primary {
